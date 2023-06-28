@@ -23,7 +23,7 @@ async function addExpense(e) {
         };
         console.log(data);
         const token = localStorage.getItem('token');
-        const res = await axios.post('http://localhost:3000/expense/post-expense', data, { headers: { "Authorization": token } });
+        const res = await axios.post('http://16.171.5.97:3000/expense/post-expense', data, { headers: { "Authorization": token } });
         window.location.reload();
     }
     catch (err) {
@@ -43,7 +43,7 @@ async function addSalary(e) {
             'category': category,
         };
         const token = localStorage.getItem('token');
-        const res = await axios.post('http://localhost:3000/expense/post-salary', data, { headers: { "Authorization": token } });
+        const res = await axios.post('http://16.171.5.97:3000/expense/post-salary', data, { headers: { "Authorization": token } });
         console.log(res.data.resData);
         window.location.reload();
     }
@@ -64,14 +64,14 @@ document.getElementById('razorpayBtn').onclick = async function (e) {
             "key": response.data.key_id,//key id generated from the dashboard
             "order_id": response.data.order.id,//order id for a particular order
             "handler": async function (response) {
-                await axios.post('http://localhost:3000/purchase/updateTransactionStatus', {
+                await axios.post('http://16.171.5.97:3000/purchase/updateTransactionStatus', {
                     order_id: options.order_id,
                     payment_id: response.razorpay_payment_id
                 }, { headers: { "Authorization": token } });
 
                 alert("You are a premium user now");
 
-                const res = await axios.post('http://localhost:3000/users/updateToken', '', { headers: { "Authorization": token } });
+                const res = await axios.post('http://16.171.5.97:3000/users/updateToken', '', { headers: { "Authorization": token } });
                 localStorage.setItem('token', res.data.token);
                 window.location.reload();
             }
@@ -102,7 +102,7 @@ function comparator(x, y) {
 document.addEventListener('DOMContentLoaded', async () => {
     try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:3000/purchase/premiumOrNot', { headers: { "Authorization": token } });
+        const response = await axios.get('http://16.171.5.97:3000/purchase/premiumOrNot', { headers: { "Authorization": token } });
         const isPremium = response.data.isPremium;
 
         if (isPremium === 'true') {
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             boardButton.onclick = async function (e) {
 
                 e.preventDefault();
-                const res = await axios.get('http://localhost:3000/premium/getLeaderboard', { headers: { "Authorization": token } });
+                const res = await axios.get('http://16.171.5.97:3000/premium/getLeaderboard', { headers: { "Authorization": token } });
                 const data = res.data.resData;
 
                 const heading = document.createElement('h2');
